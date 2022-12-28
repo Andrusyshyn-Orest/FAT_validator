@@ -107,24 +107,3 @@ void SetFatEntry32(int FATindex, uint32_t FAT32ClusEntryVal, unsigned char FAT[]
     FAT32ClusEntryVal &= 0x0FFFFFFF;
     *((uint32_t *)&FAT[FatOffset]) = FATEntryCode | FAT32ClusEntryVal;
 }
-
-
-int compare_FATs(BSStruct *bootSector, int fd) {
-    unsigned char FAT1[bootSector->BPB_FATSz16 * bootSector->BPB_BytsPerSec];
-    lseek(fd, (bootSector->BPB_RsvdSecCnt)  * bootSector->BPB_BytsPerSec, SEEK_SET);
-    read(fd, &FAT1, bootSector->BPB_FATSz16 * bootSector->BPB_BytsPerSec);
-
-    unsigned char tmp_FAT[bootSector->BPB_FATSz16 * bootSector->BPB_BytsPerSec];
-    for (int i = 0; i < bootSector->BPB_NumFATs - 1; ++i) {
-        read(fd, &tmp_FAT, bootSector->BPB_FATSz16 * bootSector->BPB_BytsPerSec);
-
-        for (int j = 0; j < bootSector->BPB_FATSz16 * bootSector->BPB_BytsPerSec; ++j) {
-            if (FAT1[j] != tmp_FAT[j]) {
-                printf("\nincompatibility in %i FAT table on %i byte!\n", i+1, j);
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}

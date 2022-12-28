@@ -27,7 +27,51 @@ typedef struct
     unsigned char  BS_VolLab[11];    /* Volume label (RDL or "NO NAME    ") */
     unsigned char  BS_FilSysType[8]; /* Deceptive FAT type Label */
 
+    // Trash
+    uint32_t       BPB_FATSz32;
+    unsigned short BPB_Flags;
+    unsigned short BPB_FATversion;
+    uint32_t       BPB_RootClustNum;
+    unsigned short BPB_FSInfoSecNum;
+    unsigned short BPB_BupBSSecNum;
+    unsigned char  BPB_Reserved[12];
+
 } BSStruct;
+#pragma pack(pop)                   /* End strict alignment */
+
+
+#pragma pack(push, 1)               /* Byte align in memory (no padding) */
+typedef struct
+
+{  unsigned char  BS_jmpBoot[3];    /* Jump instruction to the boot code */
+    unsigned char  BS_OEMName[8];    /* Name of system that formatted the volume */
+    unsigned short BPB_BytsPerSec;   /* Bytes per sector (should be 512) */
+    unsigned char  BPB_SecPerClus;   /* Sectors per cluster (FAT-12 = 1) */
+    unsigned short BPB_RsvdSecCnt;   /* Reserved sectors (FAT-12 = 1) */
+    unsigned char  BPB_NumFATs;      /* FAT tables on the disk (should be 2) */
+    unsigned short BPB_RootEntCnt;   /* Max directory entries in root directory */
+    unsigned short BPB_TotSec16;     /* FAT-12 total number of sectors on the disk */
+    unsigned char  BPB_Media;        /* Media type {fixed, removable, etc.} */
+    unsigned short BPB_FATSz16;      /* Sector size of FAT table (FAT-12 = 9) */
+    unsigned short BPB_SecPerTrk;    /* # of sectors per cylindrical track */
+    unsigned short BPB_NumHeads;     /* # of heads per volume (1.4Mb 3.5" = 2) */
+    uint32_t       BPB_HiddSec;      /* # of preceding hidden sectors (0) */
+    uint32_t       BPB_TotSec32;     /* # of FAT-32 sectors (0 for FAT-12) */
+    uint32_t       BPB_FATSz32;      /* Sector size of FAT32 table */
+    unsigned short BPB_Flags;        /* Flags */
+    unsigned short BPB_FATversion;   /* FAT version number. The high byte is the major version and the low byte is the minor version. FAT drivers should respect this field. */
+    uint32_t       BPB_RootClustNum; /* The cluster number of the root directory. Often this field is set to 2. */
+    unsigned short BPB_FSInfoSecNum; /* The sector number of the FSInfo structure. */
+    unsigned short BPB_BupBSSecNum;  /* The sector number of the backup boot sector. */
+    unsigned char  BPB_Reserved[12]; /* Reserved. When the volume is formated these bytes should be zero. */
+    unsigned char  BS_DrvNum;        /* A drive number for the media (OS specific) */
+    unsigned char  BS_Reserved1;     /* Reserved space for Windows NT (set to 0) */
+    unsigned char  BS_BootSig;       /* (0x29) Indicates following: */
+    uint32_t       BS_VolID;         /* Volume serial # (for tracking this disk) */
+    unsigned char  BS_VolLab[11];    /* Volume label (RDL or "NO NAME    ") */
+    unsigned char  BS_FilSysType[8]; /* Deceptive FAT type Label */
+
+} BSStruct32;
 #pragma pack(pop)                   /* End strict alignment */
 
 

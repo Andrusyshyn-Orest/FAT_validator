@@ -5,5 +5,5 @@ project(${PROJECT_NAME} C CXX) # project(${PROJECT_NAME} C CXX ASM)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(checking_fat src/main.cpp src/root_dir.cpp include/root_dir.hpp src/fats.cpp include/fats.hpp src/dir_entry.cpp include/dir_entry.hpp src/boot_sector.cpp include/boot_sector.hpp include/structs.hpp include/fats_versions.hpp)
+add_executable(checking_fat src/main.cpp include/root_dir.hpp src/fats.cpp include/fats.hpp src/dir_entry.cpp include/dir_entry.hpp include/boot_sector.hpp include/structs.hpp include/fats_versions.hpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
