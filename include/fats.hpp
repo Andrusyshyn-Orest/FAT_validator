@@ -3,15 +3,15 @@
 
 #include <type_traits>
 #include <unistd.h>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include "structs.hpp"
 #include "fats_versions.hpp"
 
 
-uint32_t GetFatEntry(int FATindex, const unsigned char FAT[], int fat_type);
+uint32_t GetFatEntry(uint32_t FATindex, const unsigned char FAT[], int fat_type);
 
-void SetFatEntry(int FATindex, uint32_t FATClusEntryVal, unsigned char FAT[], int fat_type);
+void SetFatEntry(uint32_t FATindex, uint32_t FATClusEntryVal, unsigned char FAT[], int fat_type);
 
 // this function was taken from https://students.cs.byu.edu/~cs345ta/labs/P6-FAT%20Supplement.html
 // Return an unsigned short containing the 12-bit FAT entry code at FATindex
@@ -24,9 +24,9 @@ unsigned short GetFatEntry16(int FATindex, const unsigned char FAT[]);
 
 void SetFatEntry16(int FATindex, unsigned short FAT16ClusEntryVal, unsigned char FAT[]);
 
-uint32_t GetFatEntry32(int FATindex, const unsigned char FAT[]);
+uint32_t GetFatEntry32(uint32_t FATindex, const unsigned char FAT[]);
 
-void SetFatEntry32(int FATindex, uint32_t FAT32ClusEntryVal, unsigned char FAT[]);
+void SetFatEntry32(uint32_t FATindex, uint32_t FAT32ClusEntryVal, unsigned char FAT[]);
 
 template<
         typename T ,

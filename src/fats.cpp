@@ -2,12 +2,12 @@
 #include "fats_versions.hpp"
 
 
-uint32_t GetFatEntry(int FATindex, const unsigned char FAT[], int fat_type)
+uint32_t GetFatEntry(uint32_t FATindex, const unsigned char FAT[], int fat_type)
 {
     if (fat_type & FAT12) {
-        return GetFatEntry12(FATindex, FAT);
+        return GetFatEntry12((int) FATindex, FAT);
     } else if (fat_type &FAT16) {
-        return GetFatEntry16(FATindex, FAT);
+        return GetFatEntry16((int) FATindex, FAT);
     } else if (fat_type &FAT32) {
         return GetFatEntry32(FATindex, FAT);
     } else {
@@ -15,12 +15,12 @@ uint32_t GetFatEntry(int FATindex, const unsigned char FAT[], int fat_type)
     }
 }
 
-void SetFatEntry(int FATindex, uint32_t FATClusEntryVal, unsigned char FAT[], int fat_type)
+void SetFatEntry(uint32_t FATindex, uint32_t FATClusEntryVal, unsigned char FAT[], int fat_type)
 {
     if (fat_type & FAT12) {
-        SetFatEntry12(FATindex, FATClusEntryVal, FAT);
+        SetFatEntry12((int) FATindex, FATClusEntryVal, FAT);
     } else if (fat_type & FAT16) {
-        SetFatEntry16(FATindex, FATClusEntryVal, FAT);
+        SetFatEntry16((int) FATindex, FATClusEntryVal, FAT);
     } else if (fat_type & FAT32) {
         SetFatEntry32(FATindex, FATClusEntryVal, FAT);
     } else {
@@ -91,17 +91,17 @@ void SetFatEntry16(int FATindex, unsigned short FAT16ClusEntryVal, unsigned char
     *((unsigned short *)&FAT[FatOffset]) = FAT16ClusEntryVal;
 }
 
-uint32_t GetFatEntry32(int FATindex, const unsigned char FAT[]) {
+uint32_t GetFatEntry32(uint32_t FATindex, const unsigned char FAT[]) {
     uint32_t FATEntryCode;
-    int FatOffset = FATindex * 4;
+    uint32_t FatOffset = FATindex * 4;
     FATEntryCode = *((uint32_t *) &FAT[FatOffset]);
     FATEntryCode &= 0x0FFFFFFF;
     return FATEntryCode;
 }
 
-void SetFatEntry32(int FATindex, uint32_t FAT32ClusEntryVal, unsigned char FAT[]) {
+void SetFatEntry32(uint32_t FATindex, uint32_t FAT32ClusEntryVal, unsigned char FAT[]) {
     uint32_t FATEntryCode;
-    int FatOffset = FATindex * 4;
+    uint32_t FatOffset = FATindex * 4;
     FATEntryCode = *((uint32_t *) &FAT[FatOffset]);
     FATEntryCode &= 0xF0000000;
     FAT32ClusEntryVal &= 0x0FFFFFFF;
