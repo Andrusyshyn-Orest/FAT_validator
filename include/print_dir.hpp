@@ -67,13 +67,14 @@ void printDir(int fd, uint32_t offset, T *bootSector, unsigned char FAT[], int f
         offset = (first_data_sector + (dirent.startCluster - 2) * bootSector->BPB_SecPerClus) * bootSector->BPB_BytsPerSec;
 
 
+        int j = 7;
         char name_string[13] = "            ";
         strncpy(name_string, (char*)dirent.Name, 8);
-        while (name_string[i] == ' ') i--;
-        name_string[i+1] = '.';                         // Add extension
-        strncpy(&name_string[i+2], (char*)dirent.Extension, 3);
-        while (name_string[i+4] == ' ') i--;
-        if (name_string[i+4] == '.') name_string[i+4] = ' ';
+        while (name_string[j] == ' ') j--;
+        name_string[j+1] = '.';                         // Add extension
+        strncpy(&name_string[j+2], (char*)dirent.Extension, 3);
+        while (name_string[j+4] == ' ') j--;
+        if (name_string[j+4] == '.') name_string[j+4] = ' ';
         std::string new_name = name;
         new_name += trim(name_string);
         new_name += "/";
